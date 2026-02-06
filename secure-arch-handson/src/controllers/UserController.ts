@@ -1,6 +1,6 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
-import { UserService } from '../services/UserService';
-import { loginSchema, getUserSchema } from '../types/schemas';
+import { FastifyRequest, FastifyReply } from "fastify";
+import { UserService } from "../services/UserService";
+import { loginSchema, getUserSchema } from "../types/schemas";
 
 export class UserController {
   private userService: UserService;
@@ -15,16 +15,18 @@ export class UserController {
     const parseResult = getUserSchema.safeParse(request.query);
     if (!parseResult.success) {
       // 型エラー回避のため、エラーオブジェクト全体を返すか、詳細が必要なら (parseResult.error as any).errors とする
-      reply.status(400).send({ message: 'Invalid input', errors: parseResult.error });
+      reply
+        .status(400)
+        .send({ message: "Invalid input", errors: parseResult.error });
       return;
     }
 
     const { id } = parseResult.data;
-    
+
     try {
       const user = await this.userService.getUserById(id);
       if (!user) {
-        reply.status(404).send({ message: 'User not found' });
+        reply.status(404).send({ message: "User not found" });
         return;
       }
       reply.send(user);
@@ -38,7 +40,9 @@ export class UserController {
     // Zodによるバリデーション
     const parseResult = loginSchema.safeParse(request.body);
     if (!parseResult.success) {
-      reply.status(400).send({ message: 'Invalid input', errors: parseResult.error });
+      reply
+        .status(400)
+        .send({ message: "Invalid input", errors: parseResult.error });
       return;
     }
 
@@ -46,11 +50,20 @@ export class UserController {
 
     try {
       const user = await this.userService.login(username, password);
-      if (!user) {
-        reply.status(401).send({ message: 'Login failed' });
-        return;
+      if (user) {
+        // fastifyのjwt.signを使ってトークンを生成
+        // ペイロードには、ユーザーを特定できるIDやユーザー名を含める
+        const token = (request.server as any).jwt.sign({
+          id: user.id,
+          username: user.username,
+        });
+        reply.send({
+          message: "Login successful",
+          token: token,
+        });
+      } else {
+        reply.status(401).send({ message: "Invalid username or password" });
       }
-      reply.send({ message: 'Login successful', user });
     } catch (err) {
       reply.status(500).send(err);
     }

@@ -1,12 +1,37 @@
 import Fastify from "fastify";
 import sqlite3 from "sqlite3";
 import argon2 from "argon2";
+import fastifyJwt from "@fastify/jwt";
+
 import { UserRepository } from "./src/repositories/UserRepository";
 import { UserService } from "./src/services/UserService";
 import { UserController } from "./src/controllers/UserController";
 
+// fastifyインスタンスの型定義
+declare module "fastify" {
+  interface FastifyInstance {
+    authenticate: any;
+  }
+}
+
+// Fastifyアプリケーションの初期化
 const fastify = Fastify({ logger: true });
 const db = new sqlite3.Database(":memory:");
+
+// JWTプラグインの登録
+fastify.register(fastifyJwt, {
+  secret: "supersecret-key-change-this-in-production",
+});
+
+// 認証用デコレータの定義
+// これを各ルートのpreHandlerで使うことで、トークンの検証を共通化できる
+fastify.decorate("authenticate", async (request: any, reply: any) => {
+  try {
+    await request.jwtVerify();
+  } catch (err) {
+    reply.send(err);
+  }
+});
 
 // データベースの初期化
 db.serialize(async () => {
@@ -37,8 +62,10 @@ const userController = new UserController(userService);
  * エントリーポイントは非常に簡潔になり、                                                                                                           │
  * ルーティングは Controller に委譲されています。
  */
-fastify.get("/user", (request, reply) =>
-  userController.getUser(request, reply),
+fastify.get(
+  "/user",
+  { preHandler: [fastify.authenticate] as any },
+  (request, reply) => userController.getUser(request, reply),
 );
 fastify.post("/login", (request, reply) =>
   userController.login(request, reply),

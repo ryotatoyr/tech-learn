@@ -31,20 +31,4 @@ export class UserRepository {
       });
     });
   }
-
-  // ユーザーをユーザー名とパスワードで検索 (プレースホルダ使用)
-  // async findByUsernameAndPassword(
-  //   username: string,
-  //   password: string,
-  // ): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     // 良い例: 複数の値も ? で対応
-  //     const query = `SELECT * FROM users WHERE username = ? AND password = ?`;
-
-  //     this.db.get(query, [username, password], (err, row) => {
-  //       if (err) reject(err);
-  //       else resolve(row);
-  //     });
-  //   });
-  // }
 }
