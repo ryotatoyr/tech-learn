@@ -1,40 +1,40 @@
-# Learning Content Summarization Strategy for Gemini CLI
+# Gemini CLI向け学習コンテンツ要約戦略
 
-This document outlines a strategy for automating the summarization of learning content within this project using Gemini CLI.
+このドキュメントは、Gemini CLIを使用してこのプロジェクト内の学習コンテンツの要約を自動化するための戦略を概説します。
 
-## 1. Define "Steps" or "Phases" in Learning Materials
+## 1. 学習資料における「ステップ」または「フェーズ」の定義
 
-To enable effective summarization, your learning materials (e.g., `learning-plan.md` or other markdown files) should be structured with clear and consistent headings for each step or phase.
+効果的な要約を可能にするには、学習資料（例: `learning-plan.md`またはその他のMarkdownファイル）を、各ステップまたはフェーズごとに明確で一貫性のある見出しで構成する必要があります。
 
-**Recommendation:**
-Use clear headings like `## Step 1: Topic Name` or `### Phase A: Subtopic`. This consistent structure will allow Gemini CLI to programmatically identify and focus on specific sections for summarization.
+**推奨事項:**
+`## ステップ1: トピック名`や`### フェーズA: サブトピック`のような明確な見出しを使用してください。この一貫した構造により、Gemini CLIは要約のための特定のセクションをプログラムで識別し、焦点を当てることができます。
 
-**Your Action:**
-Ensure your learning markdown files have a consistent and clear structure for defining steps and phases.
+**あなたの行動:**
+学習用Markdownファイルが、ステップとフェーズを定義するための明確で一貫性のある構造を持つようにしてください。
 
-## 2. Summarization Triggers
+## 2. 要約トリガー
 
-You can trigger content summarization using the following methods:
+以下の方法でコンテンツの要約をトリガーできます。
 
-### Option A: Manual Request (Recommended for now)
+### オプションA: 手動リクエスト（現時点での推奨）
 
-After completing a step or phase, you can explicitly ask Gemini CLI to summarize a specific section of your `learning-plan.md` or other relevant files.
+ステップまたはフェーズを完了した後、`learning-plan.md`またはその他の関連ファイルの特定のセクションの要約をGemini CLIに明示的に要求できます。
 
-**Example Prompts:**
-*   "Summarize the content under '## Step 2: Implementing Authentication' in `secure-arch-handson/learning-plan.md`."
-*   "Please provide a summary of the 'Introduction' section from `docs/chapter1.md`."
+**プロンプトの例:**
+*   「`secure-arch-handson/learning-plan.md`の「## ステップ2: 認証の実装」セクションの内容を要約してください。」
+*   「`docs/chapter1.md`の「はじめに」セクションの要約を提供してください。」
 
-### Option B: Code-based Summarization (More Advanced)
+### オプションB: コードベースの要約（より高度）
 
-If a "step" involves significant code changes, you can ask for a summary of the code changes since a specific commit or a previous summarization point.
+「ステップ」が大幅なコード変更を伴う場合、特定のコミットまたは前回の要約時点以降のコード変更の要約を要求できます。
 
-**Example Prompt:**
-*   "Summarize the code changes in the `secure-arch-handson` directory since commit `[previous_commit_hash]` up to the current state, focusing on the implementation of `server.ts`."
-*   "What were the key code modifications between the 'Initial Setup' commit and the 'Database Integration' commit?"
+**プロンプトの例:**
+*   「`secure-arch-handson`ディレクトリで、コミット`[前回のコミットハッシュ]`から現在の状態までのコード変更を、`server.ts`の実装に焦点を当てて要約してください。」
+*   「「初期設定」コミットと「データベース統合」コミット間の主要なコード変更は何でしたか？」
 
-## 3. Summarization Output
+## 3. 要約出力
 
-*   Gemini CLI will provide the summary directly in the chat interface.
-*   If you wish to save the summaries to a file (e.g., `summaries/step-1-summary.md`), please specify the desired file path and format in your request.
+*   Gemini CLIはチャットインターフェースで直接要約を提供します。
+*   要約をファイル（例: `summaries/step-1-summary.md`）に保存したい場合は、リクエストで希望するファイルパスと形式を指定してください。
 
-By following these guidelines, you can leverage Gemini CLI to help you review and consolidate your learning progress effectively.
+これらのガイドラインに従うことで、Gemini CLIを活用して学習の進捗状況を効果的に確認し、統合することができます。
