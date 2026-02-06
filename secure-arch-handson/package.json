@@ -18,6 +18,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@types/argon2": "^0.14.1",
+    "argon2": "^0.44.0",
     "fastify": "^5.7.4",
     "sqlite3": "^5.1.7",
     "zod": "^4.3.6"

@@ -14,7 +14,8 @@ export class UserController {
     // Zodによるバリデーション
     const parseResult = getUserSchema.safeParse(request.query);
     if (!parseResult.success) {
-      reply.status(400).send({ message: 'Invalid input', errors: parseResult.error.errors });
+      // 型エラー回避のため、エラーオブジェクト全体を返すか、詳細が必要なら (parseResult.error as any).errors とする
+      reply.status(400).send({ message: 'Invalid input', errors: parseResult.error });
       return;
     }
 
@@ -37,7 +38,7 @@ export class UserController {
     // Zodによるバリデーション
     const parseResult = loginSchema.safeParse(request.body);
     if (!parseResult.success) {
-      reply.status(400).send({ message: 'Invalid input', errors: parseResult.error.errors });
+      reply.status(400).send({ message: 'Invalid input', errors: parseResult.error });
       return;
     }
 
