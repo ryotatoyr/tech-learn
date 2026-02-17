@@ -1,5 +1,7 @@
 import sqlite3 from "sqlite3";
 
+import { User } from "../types/interfaces";
+
 export class UserRepository {
   private db: sqlite3.Database;
 
@@ -8,7 +10,7 @@ export class UserRepository {
   }
 
   // ユーザーをIDで検索 (プレースホルダ使用)
-  async findById(id: string): Promise<any> {
+  async findById(id: number): Promise<User | null> {
     return new Promise((resolve, reject) => {
       // 良い例: ? を使ったプレースホルダ
       const query = `SELECT id, username FROM users WHERE id = ?`;

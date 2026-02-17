@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // ログインリクエストのスキーマ
 export const loginSchema = z.object({
@@ -8,7 +8,7 @@ export const loginSchema = z.object({
 
 // ユーザー取得リクエストのスキーマ（クエリパラメータ）
 export const getUserSchema = z.object({
-  id: z.string().regex(/^\d+$/, "IDは数値である必要があります"), // 数字のみ許可することでSQLインジェクションのリスクを軽減（これだけでは不十分ですが第一歩です）
+  id: z.coerce.number<number>(), // 数字のみ許可することでSQLインジェクションのリスクを軽減（これだけでは不十分ですが第一歩です）
 });
 
 // スキーマから型を自動生成

@@ -8,7 +8,7 @@ export class UserService {
     this.userRepository = userRepository;
   }
 
-  async getUserById(id: string) {
+  async getUserById(id: number) {
     // 将来的にここで権限チェックなどを行う
     return await this.userRepository.findById(id);
   }
