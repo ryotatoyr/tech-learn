@@ -1,0 +1,26 @@
+{
+  "name": "backend-performance-handson",
+  "version": "1.0.0",
+  "description": "Backend performance improvement hands-on tutorial",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev --respawn index.ts",
+    "test": "autocannon -c 100 -d 10 http://localhost:3000/users",
+    "profile": "clinic doctor -- ts-node index.ts"
+  },
+  "dependencies": {
+    "fastify": "^5.0.0",
+    "prisma": "^6.0.0",
+    "@prisma/client": "^6.0.0",
+    "ioredis": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.0",
+    "autocannon": "^8.0.0",
+    "@clinic/doctor": "^11.0.0"
+  }
+}
