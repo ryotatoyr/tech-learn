@@ -1,8 +1,8 @@
 import sqlite3 from "sqlite3";
 
-import { User } from "../types/interfaces";
+import { User, IUserRepository } from "../types/interfaces";
 
-export class UserRepository {
+export class UserRepository implements IUserRepository {
   private db: sqlite3.Database;
 
   constructor(db: sqlite3.Database) {

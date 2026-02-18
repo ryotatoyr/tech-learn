@@ -1,10 +1,10 @@
-import { UserRepository } from "../repositories/UserRepository";
+import { IUserRepository } from "../types/interfaces";
 import * as argon2 from "argon2";
 
 export class UserService {
-  private userRepository: UserRepository;
+  private userRepository: IUserRepository;
 
-  constructor(userRepository: UserRepository) {
+  constructor(userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
 
@@ -16,7 +16,7 @@ export class UserService {
   async login(username: string, password: string) {
     // ログインロジック
     const user = await this.userRepository.findByUsername(username);
-    if (!user) {
+    if (!user || !user.password) {
       return null; // ユーザーが存在しない場合
     }
     // argon2.verifyを使ってパスワードを検証
