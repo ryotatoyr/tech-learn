@@ -64,4 +64,24 @@ describe("UserService", () => {
       expect(result).toBeNull();
     });
   });
+
+  describe("getUserById", () => {
+    it("ユーザーが存在する場合、ユーザー情報を返す", async () => {
+      const fakeUser: User = { id: 1, username: "testuser" };
+      mockUserRepository.findById.mockResolvedValue(fakeUser);
+
+      const result = await userService.getUserById(1);
+
+      expect(result).toEqual(fakeUser);
+      expect(mockUserRepository.findById).toHaveBeenCalledWith(1);
+    });
+
+    it("ユーザーが存在しない場合、nullを返す", async () => {
+      mockUserRepository.findById.mockResolvedValue(null);
+
+      const result = await userService.getUserById(999);
+
+      expect(result).toBeNull();
+    });
+  });
 });
